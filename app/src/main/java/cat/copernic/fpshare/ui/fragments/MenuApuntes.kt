@@ -94,7 +94,11 @@ class MenuApuntes : Fragment(), SearchView.OnQueryTextListener {
                     val publiProfile = document["perfil"].toString()
                     val publiTitle = document["titulo"].toString()
                     val imgPubli = document["imgPubli"].toString()
-                    val publi = Publicacion(idPubli,publiProfile,publiTitle,publiDescr,checked,publiLink, imgPubli)
+                    val publiCiclo = document["idCiclo"].toString()
+                    var publiModulo = document["idModulo"].toString()
+                    val publiUf = document["idUf"].toString()
+                    val publiPath = document["pathFile"].toString()
+                    val publi = Publicacion(idPubli,publiProfile,publiTitle,publiDescr,checked,publiLink, imgPubli, publiCiclo, publiModulo, publiUf,publiPath)
                     cicloList.add(publi)
                 }
                 /***

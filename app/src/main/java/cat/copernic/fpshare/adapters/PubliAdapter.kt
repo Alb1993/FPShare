@@ -84,9 +84,10 @@ class PubliAdapter(private val publicaciones: List<Publicacion>) : RecyclerView.
                 val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
                 viewB.imgIcon.setImageBitmap(bitmap)
             }
+            val path=publicacion.pathFile
 
-            val pdfRef = storage.getReference("pdfs/${publicacion.pathFile}.pdf")
             viewB.txtDescarga.setOnClickListener{
+                val pdfRef = storage.reference.child("pdfs/${path}.pdf")
                 val urlTask = pdfRef.downloadUrl
                 urlTask.addOnSuccessListener { uri ->
                     val url = uri.toString()
@@ -102,7 +103,6 @@ class PubliAdapter(private val publicaciones: List<Publicacion>) : RecyclerView.
                 val queryUrl: Uri = Uri.parse(publicacion.enlace)
                 val intent = Intent(Intent.ACTION_VIEW, queryUrl)
                 contexto.startActivity(intent)
-
             }
         }
     }

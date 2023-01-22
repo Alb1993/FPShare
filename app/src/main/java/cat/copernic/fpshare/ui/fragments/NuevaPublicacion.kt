@@ -15,6 +15,7 @@ import android.webkit.URLUtil
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import cat.copernic.fpshare.databinding.FragmentNuevaPublicacionBinding
 import cat.copernic.fpshare.modelo.*
@@ -24,6 +25,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * Fragment de la pantalla de nueva publicación
@@ -52,21 +56,20 @@ class NuevaPublicacion : Fragment() {
     private var storage = FirebaseStorage.getInstance()
     public lateinit var path: String
     private var pdfUri: Uri? = null
-    private var nombreArchivo: String = ""
-    private var pdfRef = storage.reference.child("pdfs/$nombreArchivo.pdf")
-    private lateinit var publi: Publicacion
+    private lateinit var nombreArchivo: String
     val i: Int = 0
 
     private val resultat = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             nombreArchivo = System.currentTimeMillis().toString()
+            var pdfRef = storage.reference.child("pdfs/${nombreArchivo}.pdf")
             pdfUri = it.data?.data //Assignem l'URI de la imatge
             pdfUri?.let{uri->
                 //Toast.makeText(requireContext(), uri.toString(), Toast.LENGTH_LONG).show()
                 pdfRef.putFile(uri).addOnSuccessListener {
-                    Toast.makeText(requireContext(),"Doc added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(),"Doc Added", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener(){
-                    Toast.makeText(requireContext(),"Doc no added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(),"Doc no Added" , Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -147,6 +150,7 @@ class NuevaPublicacion : Fragment() {
             llegirDades()
         }
         btnAdd.setOnClickListener {
+
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "application/pdf"
@@ -214,7 +218,7 @@ class NuevaPublicacion : Fragment() {
             publi.perfil = usuario.nombre + " " + usuario.apellidos
             publi.titulo = titulo.text.toString()
             publi.descripcion = descripcion.text.toString()
-            publi.pathFile = nombreArchivo.toString()
+
             if (binding.optionDam.isChecked) {
                 publi.checked = "DAM"
 
@@ -227,15 +231,16 @@ class NuevaPublicacion : Fragment() {
             } else if (binding.optionAsix.isChecked) {
                 publi.checked = "ASIR"
             }
-            publi.idCiclo = "a"
-            publi.idModulo = "a"
-            publi.idUf = "a"
+            publi.pathFile = nombreArchivo
+            publi.idCiclo =ciclo
+            publi.idModulo = modulo
+            publi.idUf = uf
             publi.enlace = enlace.text.toString()
             /**
              * Si la ID no esta vacia, añadiremos la publicacion en el Storage.
              */
 
-            anadirPublicacion(ciclo, modulo, uf, publi, nombreArchivo)
+            anadirPublicacion(publi)
 
         }
     }
@@ -270,14 +275,10 @@ class NuevaPublicacion : Fragment() {
      * @param idUf
      */
 
-    private fun anadirPublicacion(
-        checked: String, idModulo: String, idUf: String, publi: Publicacion, nombreArchivo: String
+    private fun anadirPublicacion(publi: Publicacion
     ) {
+
         val appContext = context
-        publi.pathFile = nombreArchivo
-        publi.idCiclo = publi.checked
-        publi.idModulo = idModulo
-        publi.idUf = idUf
         /***
          * En añadir publicacion se define la ruta donde se guardara la publicacion.
          * La variable checked sera la id del Ciclo, el idModulo y idUf lo escribimos
@@ -309,8 +310,8 @@ class NuevaPublicacion : Fragment() {
                 Snackbar.LENGTH_LONG
             ).show()
         } else {
-            bd.collection("Ciclos").document(checked).collection("Modulos").document(idModulo)
-                .collection("UFs").document(idUf).collection("Publicaciones").add(publi)
+            bd.collection("Ciclos").document(publi.idCiclo).collection("Modulos").document(publi.idModulo)
+                .collection("UFs").document(publi.idUf).collection("Publicaciones").add(publi)
                 .addOnSuccessListener { //S'ha afegit el departament...
                     val view = binding.root
                     val action =

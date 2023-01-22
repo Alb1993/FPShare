@@ -195,6 +195,11 @@ class pantalla_principal() : Fragment(), SearchView.OnQueryTextListener{
                         var publiLink = doc4["enlace"].toString()
                         val publiProfile = doc4["perfil"].toString()
                         val publiTitle = doc4["titulo"].toString()
+                        val publiCiclo = doc4["idCiclo"].toString()
+                        var publiModulo = doc4["idModulo"].toString()
+                        val publiUf = doc4["idUf"].toString()
+                        val publiPath = doc4["pathFile"].toString()
+
                         /***
                          * Añadimos el titulo de la publicacion para poder encontrarlo en el buscador.
                          */
@@ -207,7 +212,12 @@ class pantalla_principal() : Fragment(), SearchView.OnQueryTextListener{
                                 publiDescr,
                                 checked,
                                 publiLink,
-                                imgPubli
+                                imgPubli,
+                                publiCiclo,
+                                publiModulo,
+                                publiUf,
+                                publiPath
+
                             )
 
                         /***
