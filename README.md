@@ -2,6 +2,11 @@
 
 ![fpshare1](https://github.com/user-attachments/assets/3765750c-de73-4780-8e9f-8111ce599b57)
 
+![fpshare2](https://github.com/user-attachments/assets/f1206a8d-ff29-41c0-9de7-c53f495477e3)
+
+![FPshare3](https://github.com/user-attachments/assets/30e66e76-2377-4bbd-a270-147848db51f5)
+
+![fpshare4](https://github.com/user-attachments/assets/c5b35479-22b0-4727-9f95-6be013d1ca7a)
 
 ## Descripción
 
