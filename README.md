@@ -1,5 +1,5 @@
 # FPShare
-<p align="left">
+<p align="center">
   <img src="https://github.com/user-attachments/assets/3765750c-de73-4780-8e9f-8111ce599b57"/>
   <img src="https://github.com/user-attachments/assets/f1206a8d-ff29-41c0-9de7-c53f495477e3"/>
   <img src="https://github.com/user-attachments/assets/30e66e76-2377-4bbd-a270-147848db51f5"/>
