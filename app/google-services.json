@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "340176083789",
-    "project_id": "fpshare-x",
-    "storage_bucket": "fpshare-x.appspot.com"
+    "project_number": "616930047652",
+    "project_id": "fpshare2",
+    "storage_bucket": "fpshare2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:340176083789:android:87072298856d2cb6227504",
+        "mobilesdk_app_id": "1:616930047652:android:c454668c7f7487d0abd831",
         "android_client_info": {
-          "package_name": "cat.copernic.fpshare"
+          "package_name": "com.albert.fpshare"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "340176083789-bp6ar7i8i790b1gis5p6ebv74k090mjr.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCnQ-59az4lhss6ddmMygLeK9RLZdK7Aq0"
+          "current_key": "AIzaSyAeIP62SPDzPGFWDPghZmfLsP-OYJzeFg8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "340176083789-bp6ar7i8i790b1gis5p6ebv74k090mjr.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
