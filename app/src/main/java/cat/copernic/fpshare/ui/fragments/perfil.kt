@@ -28,6 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
+import com.google.firebase.storage.StorageReference
+import io.grpc.Context.Storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -51,16 +53,20 @@ class perfil : Fragment() {
     private lateinit var emailEdittext : EditText
     private var storage = FirebaseStorage.getInstance()
     private var user = Firebase.auth.currentUser
-    private var storageRef = storage.reference.child("Imagenes/" /* + user?.email.toString() */)
+    private var imgperfil: String = ""
+    private var photoSelectedUri: Uri? = null
+    //private var storageRef = storage.reference.child("Imagenes/"+ user?.email.toString())
+    private var storageRef = storage.reference.child("Imagenes/$imgperfil")
     private lateinit var imagen: ImageView
     private lateinit var progressBar: ProgressBar
     private var REQUEST_CODE = 123
 
-    private var photoSelectedUri: Uri? = null
 
+    /* Esto solo se ejecuta en el momento de subir la imagen, no de cargarla.*/
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             photoSelectedUri = it.data?.data //Assignem l'URI de la imatge
+            //imgperfil = photoSelectedUri.toString()
             uploadImage().execute()
         }
     }
@@ -142,7 +148,7 @@ class perfil : Fragment() {
                         "instituto",
                         insituto.text.toString(),
                         "imgPerfil",
-                        photoSelectedUri.toString()
+                        imgperfil
                     ).addOnSuccessListener {
                         Snackbar.make(
                             binding.fragmentPerfil,
@@ -163,7 +169,7 @@ class perfil : Fragment() {
                         apellidosEditText.text.toString(),
                         numero.text.toString(),
                         insituto.text.toString(),
-                        photoSelectedUri.toString(),
+                        imgperfil,
                         false
                     )
                     bd.collection("Usuarios").document(email).set(user)
@@ -187,14 +193,18 @@ class perfil : Fragment() {
                 publishProgress(progress)
                 Thread.sleep(1000)
             }
+            //PONER NOMBRE DEL ARCHIVO AQUI
+
+            imgperfil = System.currentTimeMillis().toString()
+            storageRef = storage.reference.child("Imagenes/$imgperfil")
             photoSelectedUri?.let { uri ->
                 /***
                  * Subimos la imagen seleccionada a Firestore con el metodo putFile y le pasamos como
                  * parametro la URI de la imagen.
                  */
-                storageRef.putFile(uri).addOnSuccessListener {
+                storageRef?.putFile(uri)!!.addOnSuccessListener {
                     lifecycleScope.launch(Dispatchers.Main){
-                        async{ cargarImagen() }
+                        async{ cargarImagen(imgperfil) }
                     }
                 }
 
@@ -262,16 +272,19 @@ class perfil : Fragment() {
             insituto.setText(user.instituto)
             emailEdittext.setText(user.email)
                 lifecycleScope.launch(Dispatchers.Main){
-                    async{ cargarImagen() }
+                    async{ cargarImagen(user.imgPerfil) }
                 }
             }
     }
 
-    suspend fun cargarImagen(){
+    /*Funcion que pinta la imagen en el icono perfil de la aplicacion*/
+    suspend fun cargarImagen(imagenperfil: String){
         /***
          * I aqui cargara la imagen del usuario cuyo nombre sera el mismo que el del email
          * del usuario, puesto que nada mas puede tener un email.
          */
+        var storageRef = storage.reference.child("Imagenes/$imagenperfil")
+
         val localfile = File.createTempFile("tempImage", "jpg")
         try {
             storageRef.getFile(localfile).await()
@@ -298,6 +311,7 @@ class perfil : Fragment() {
                 /***
                  * Añadimos la imagen en Firestore
                  */
+                imgperfil = System.currentTimeMillis().toString()
                 uploadImage().execute()
 
             } else {

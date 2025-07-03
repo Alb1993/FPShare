@@ -233,7 +233,7 @@ class NuevaPublicacion : Fragment() {
              * Creamos una publicacion y utilizamos los datos del usuario para generar la publicacion.
              */
             publi.id = "a"
-            publi.imgPubli = usuario.email
+            publi.imgPubli = usuario.imgPerfil
             publi.perfil = usuario.nombre + " " + usuario.apellidos
             publi.titulo = titulo.text.toString()
             publi.descripcion = descripcion.text.toString()
