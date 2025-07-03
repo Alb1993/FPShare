@@ -38,18 +38,19 @@ class NuevaPublicacion : Fragment() {
     private var bd = FirebaseFirestore.getInstance()
     private lateinit var titulo: EditText
     private lateinit var descripcion: TextInputEditText
-    private lateinit var enlace: TextInputEditText
     private var user = Firebase.auth.currentUser
     private lateinit var botonPublicar: Button
     private lateinit var idModuloSpinner: Spinner
     private lateinit var idUfSpinner: Spinner
+    private lateinit var idCicleSpinner: Spinner
     private var ciclo: String = "0"
     private var modulo: String = "0"
     private var uf: String = "0"
     private lateinit var arrayIdModulo: ArrayList<String>
     private lateinit var arrayIdUf: ArrayList<String>
+    private lateinit var arrayIdCicle: ArrayList<String>
     private lateinit var btnAdd: Button
-    private val READ_REQUEST_CODE = 42
+    //private val READ_REQUEST_CODE = 42
     private var storage = FirebaseStorage.getInstance()
     public lateinit var path: String
     private var pdfUri: Uri? = null
@@ -65,7 +66,7 @@ class NuevaPublicacion : Fragment() {
                 //Toast.makeText(requireContext(), uri.toString(), Toast.LENGTH_LONG).show()
                 pdfRef.putFile(uri).addOnSuccessListener {
                     Toast.makeText(requireContext(),getString(cat.copernic.fpshare.R.string.docAdded), Toast.LENGTH_LONG).show()
-                }.addOnFailureListener(){
+                }.addOnFailureListener{
                     Toast.makeText(requireContext(),getString(cat.copernic.fpshare.R.string.docNoAdded), Toast.LENGTH_LONG).show()
                 }
             }
@@ -97,24 +98,27 @@ class NuevaPublicacion : Fragment() {
         botonPublicar = binding.btnPublish
         titulo = binding.textPost
         descripcion = binding.textDescription
-        enlace = binding.textLink
         idModuloSpinner = binding.spinnerModulesNewPost
         idUfSpinner = binding.spinnerUfsNewPost
-        btnAdd = binding.btnAdd!!
+        idCicleSpinner = binding.spinnerCiclesNewPost!!
+        btnAdd = binding.btnAdd
 
-        binding.tagsCicles.setOnCheckedChangeListener { group, checkedId ->
-            if (binding.optionDam.isChecked) {
-                cargarModulos("DAM")
-                ciclo = "DAM"
-            } else if (binding.optionDaw.isChecked) {
-                cargarModulos("DAW")
-                ciclo = "DAW"
-            } else if (binding.optionSmix.isChecked) {
-                cargarModulos("SMIR")
-                ciclo = "SMIR"
-            } else if (binding.optionAsix.isChecked) {
-                cargarModulos("ASIR")
-                ciclo = "ASIR"
+        cargarCiclos()
+
+        idCicleSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View, position: Int, id: Long
+            ) {
+                idUfSpinner.adapter = null
+                // Un item ha sido seleccionado
+                ciclo = arrayIdCicle[position]
+                // Hacer algo con el item seleccionado
+                cargarModulos(ciclo)
+
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // No se ha seleccionado ningún item
+
             }
         }
         idModuloSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -128,6 +132,7 @@ class NuevaPublicacion : Fragment() {
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // No se ha seleccionado ningún item
+                idUfSpinner.adapter = null
             }
         }
         idUfSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -178,6 +183,23 @@ class NuevaPublicacion : Fragment() {
             }
     }
 
+    private fun cargarCiclos(){
+        val listaCiclos = ArrayList<String>()
+        arrayIdCicle = ArrayList()
+        bd.collection("Ciclos").get().addOnSuccessListener { documents ->
+            for(document in documents){
+                listaCiclos.add(document["nombre"].toString())
+                arrayIdCicle.add(document.id)
+            }
+
+            val adapter = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item)
+            adapter.addAll(listaCiclos)
+            idCicleSpinner.adapter = adapter
+        }
+
+    }
+
+
     /**
      * Con esta función destruimos la vista del fragemnt y limpiamos recursos para que el sistema funcione correctamente
      */
@@ -216,23 +238,11 @@ class NuevaPublicacion : Fragment() {
             publi.titulo = titulo.text.toString()
             publi.descripcion = descripcion.text.toString()
 
-            if (binding.optionDam.isChecked) {
-                publi.checked = "DAM"
-
-            } else if (binding.optionDaw.isChecked) {
-                publi.checked = "DAW"
-
-            } else if (binding.optionSmix.isChecked) {
-                publi.checked = "SMIR"
-
-            } else if (binding.optionAsix.isChecked) {
-                publi.checked = "ASIR"
-            }
             publi.pathFile = nombreArchivo
             publi.idCiclo =ciclo
             publi.idModulo = modulo
             publi.idUf = uf
-            publi.enlace = enlace.text.toString()
+
             /**
              * Si la ID no esta vacia, añadiremos la publicacion en el Storage.
              */
@@ -250,9 +260,12 @@ class NuevaPublicacion : Fragment() {
     private fun cargarModulos(idCiclo: String) {
         val listaModulos = ArrayList<String>()
         arrayIdModulo = ArrayList()
+        val listaUfs = ArrayList<String>()
+
         bd.collection("Ciclos").document(idCiclo).collection("Modulos").get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
+
                     arrayIdModulo.add(document.id)
                     listaModulos.add(document["nombre"].toString())
                 }
@@ -262,6 +275,7 @@ class NuevaPublicacion : Fragment() {
                 idModuloSpinner.adapter = adapter
 
             }
+
     }
 
     /**
@@ -282,13 +296,7 @@ class NuevaPublicacion : Fragment() {
          * en los EditText abajo.
          */
 
-        if (!URLUtil.isValidUrl(publi.enlace)) {
-            Snackbar.make(
-                binding.constraintNuevaPublicacion,
-                getString(cat.copernic.fpshare.R.string.invalidURL),
-                Snackbar.LENGTH_LONG
-            ).show()
-        } else if (!algoVacio(publi.titulo, publi.descripcion, publi.enlace)) {
+         if (!algoVacio(publi.titulo, publi.descripcion)) {
             Snackbar.make(
                 binding.constraintNuevaPublicacion,
                 getString(cat.copernic.fpshare.R.string.errorCamposVacios),
@@ -322,11 +330,11 @@ class NuevaPublicacion : Fragment() {
 
 
     private fun algoVacio(
-        titulo: String, descripcion: String, enlace: String
+        titulo: String, descripcion: String
     ): Boolean {
         return titulo.isNotEmpty() && titulo.isNotBlank()
                 && descripcion.isNotEmpty() && descripcion.isNotBlank()
-                && enlace.isNotEmpty() && enlace.isNotBlank()
+
     }
 
     /**

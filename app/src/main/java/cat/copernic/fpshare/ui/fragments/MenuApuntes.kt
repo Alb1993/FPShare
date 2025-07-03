@@ -90,7 +90,7 @@ class MenuApuntes : Fragment(), SearchView.OnQueryTextListener {
                     val idPubli = document.id
                     val checked = document["checked"].toString()
                     val publiDescr = document["descripcion"].toString()
-                    val publiLink = document["enlace"].toString()
+
                     val publiProfile = document["perfil"].toString()
                     val publiTitle = document["titulo"].toString()
                     val imgPubli = document["imgPubli"].toString()
@@ -98,7 +98,7 @@ class MenuApuntes : Fragment(), SearchView.OnQueryTextListener {
                     var publiModulo = document["idModulo"].toString()
                     val publiUf = document["idUf"].toString()
                     val publiPath = document["pathFile"].toString()
-                    val publi = Publicacion(idPubli,publiProfile,publiTitle,publiDescr,checked,publiLink, imgPubli, publiCiclo, publiModulo, publiUf,publiPath)
+                    val publi = Publicacion(idPubli,publiProfile,publiTitle,publiDescr,checked, imgPubli, publiCiclo, publiModulo, publiUf,publiPath)
                     cicloList.add(publi)
                 }
                 /***

@@ -56,7 +56,6 @@ class PubliAdminAdapter(
             viewB.txtProf.text = publicacion.perfil
             viewB.txtPubliTitle.text = publicacion.titulo
             viewB.txtDescr.text = publicacion.descripcion
-            viewB.textLink.text = publicacion.enlace
             Picasso.get().load(publicacion.imgPubli.toUri()).into(viewB.imgIcon)
         }
     }

@@ -11,7 +11,6 @@ data class Publicacion(
     var titulo: String = "",
     var descripcion: String = "",
     var checked: String = "",
-    var enlace: String = "",
     var imgPubli: String = "",
     var idCiclo: String = "",
     var idModulo: String = "",

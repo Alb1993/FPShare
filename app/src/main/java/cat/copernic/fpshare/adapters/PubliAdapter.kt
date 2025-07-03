@@ -71,7 +71,7 @@ class PubliAdapter(private val publicaciones: List<Publicacion>) : RecyclerView.
             viewB.txtProf.text = publicacion.perfil
             viewB.txtPubliTitle.text = publicacion.titulo
             viewB.txtDescr.text = publicacion.descripcion
-            viewB.textLink.text = publicacion.enlace
+            //viewB.textLink.text = publicacion.enlace
             /**
              * Carga de la ruta del enlace a la imagen de la publicacion
              *
@@ -99,11 +99,13 @@ class PubliAdapter(private val publicaciones: List<Publicacion>) : RecyclerView.
                 /**
                  * Inicializacion del enlace
                  */
+            /*
             viewB.textLink.setOnClickListener {
                 val queryUrl: Uri = Uri.parse(publicacion.enlace)
                 val intent = Intent(Intent.ACTION_VIEW, queryUrl)
                 contexto.startActivity(intent)
             }
+            */
         }
     }
 

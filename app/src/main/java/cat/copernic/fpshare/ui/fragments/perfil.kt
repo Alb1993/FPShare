@@ -51,7 +51,7 @@ class perfil : Fragment() {
     private lateinit var emailEdittext : EditText
     private var storage = FirebaseStorage.getInstance()
     private var user = Firebase.auth.currentUser
-    private var storageRef = storage.reference.child("Imagenes/" + user?.email.toString())
+    private var storageRef = storage.reference.child("Imagenes/" /* + user?.email.toString() */)
     private lateinit var imagen: ImageView
     private lateinit var progressBar: ProgressBar
     private var REQUEST_CODE = 123

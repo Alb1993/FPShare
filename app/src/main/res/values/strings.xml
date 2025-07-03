@@ -46,8 +46,8 @@
     <!--pantalla de nueva publicación -->
     <string name="title_new_post">New Post</string>
     <string name="description_new_post">Description</string>
-    <string name="link_new_post">Link</string>
-    <string name="tags_new_post">Tags</string>
+    <string name="link_new_post">File</string>
+    <string name="tags_new_post">Cicle</string>
     <string name="dam_new_post" translatable="false">DAM</string>
     <string name="daw_new_post" translatable="false">DAW</string>
     <string name="asix_new_post">ASIX</string>

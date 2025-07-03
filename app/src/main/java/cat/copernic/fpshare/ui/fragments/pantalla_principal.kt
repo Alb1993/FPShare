@@ -192,7 +192,6 @@ class pantalla_principal() : Fragment(), SearchView.OnQueryTextListener{
                         val idPubli = doc4.id
                         val checked = doc4["checked"].toString()
                         val publiDescr = doc4["descripcion"].toString()
-                        var publiLink = doc4["enlace"].toString()
                         val publiProfile = doc4["perfil"].toString()
                         val publiTitle = doc4["titulo"].toString()
                         val publiCiclo = doc4["idCiclo"].toString()
@@ -211,7 +210,6 @@ class pantalla_principal() : Fragment(), SearchView.OnQueryTextListener{
                                 publiTitle,
                                 publiDescr,
                                 checked,
-                                publiLink,
                                 imgPubli,
                                 publiCiclo,
                                 publiModulo,

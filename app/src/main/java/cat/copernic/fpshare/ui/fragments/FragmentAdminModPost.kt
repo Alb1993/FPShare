@@ -97,12 +97,10 @@ class FragmentAdminModPost : Fragment() {
                     it["titulo"].toString(),
                     it["descripcion"].toString(),
                     it["checked"].toString(),
-                    it["enlace"].toString(),
                     it["imgPubli"].toString()
                 )
                 tituloEditText.setText(publi.titulo) // Titulo introducido por usuario
                 descripcionEditText.setText(publi.descripcion) // Descripcion introducida por usuario
-                enlaceEditText.setText(publi.enlace) // Enlace introducido por usuario
             }
     }
 
