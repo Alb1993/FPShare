@@ -24,8 +24,8 @@
     <string name="tags_admin_menu">Etiquetas</string>
     <string name="title_new_post">Nueva publicación</string>
     <string name="description_new_post">Descripción</string>
-    <string name="link_new_post">Enlace</string>
-    <string name="tags_new_post">Etiquetas</string>
+    <string name="link_new_post">Archivo PDF</string>
+    <string name="tags_new_post">Ciclos</string>
     <string name="asix_new_post">ASIR</string>
     <string name="smix__new_post">SMIR</string>
     <string name="content_description_spinner_modules_new_post">Lista de módulos del ciclo seleccionado</string>

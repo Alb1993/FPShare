@@ -24,7 +24,7 @@
     <string name="bottom_search">Buscar</string>
     <string name="btn_guardar">Guardar</string>
     <string name="btn_no">No</string>
-    <string name="btn_send">Botó per enviar un missatge al fil</string>
+    <string name="btn_send"> per enviar un missatge al fil</string>
     <string name="btn_yes">Si</string>
     <string name="buscar">Cercar</string>
     <string name="campos_vacios">Camps buits</string>
@@ -58,6 +58,9 @@
     <string name="desactivar_recordatorio">Ja hi ha un recordatori activat, voleu desactivar-lo?</string>
     <string name="descripcion_valorar_app">Voleu valorar l\'aplicació a Google Play Store?</string>
     <string name="description_new_post">Descripció</string>
+    <string name="docAdded">Document afegit</string>
+    <string name="docNoAdded">Document no afegit</string>
+    <string name="download">Descarregar</string>
     <string name="edit">Modificar</string>
     <string name="edit_cicle">Modificar Cicle</string>
     <string name="edit_description">editar descripció</string>
@@ -93,7 +96,7 @@
     <string name="institute_profile">Institut</string>
     <string name="invalidURL">URL no valida</string>
     <string name="last_names_profile">Cognoms</string>
-    <string name="link_new_post">Enllaç</string>
+    <string name="link_new_post">Arxiu PDF</string>
     <string name="logo_de_la_app_image_login">Logo de la App</string>
     <string name="logo_de_la_app_recoovery_password">Logo de la App</string>
     <string name="menu_ajustes">Configuració</string>
@@ -158,7 +161,7 @@
     <string name="strTitle">Titol</string>
     <string name="tag_name">Nom de l\'Etiqueta</string>
     <string name="tags_admin_menu">Etiquetes</string>
-    <string name="tags_new_post">Etiquetes</string>
+    <string name="tags_new_post">Cicles</string>
     <string name="telefonoInvalido">Número de telèfon no vàlid</string>
     <string name="telephone_number_profile">Número de Telèfon</string>
     <string name="textBtnSave">Guardar Canvis</string>

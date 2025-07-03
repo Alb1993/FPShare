@@ -24,7 +24,7 @@
     <string name="bottom_search">Buscar</string>
     <string name="btn_guardar">Guardar</string>
     <string name="btn_no">NO</string>
-    <string name="btn_send">Botón para mandar el mensaje al hilo</string>
+    <string name="btn_send"> para mandar el mensaje al hilo</string>
     <string name="btn_yes">SI</string>
     <string name="buscar">Buscar</string>
     <string name="campos_vacios">Campos vacíos</string>
@@ -59,6 +59,9 @@
     <string name="desactivar_recordatorio">Ya hay un recordatorio activado, ¿desea desactivarlo?</string>
     <string name="descripcion_valorar_app">¿Quieres valorar la aplicación en Google Play Store?</string>
     <string name="description_new_post">Descripción</string>
+    <string name="docAdded">Documento añadido</string>
+    <string name="docNoAdded">Documento no añadido</string>
+    <string name="download">Descargar</string>
     <string name="edit">Editar</string>
     <string name="edit_cicle">Editar Ciclo</string>
     <string name="edit_description">editar descripción</string>
@@ -94,7 +97,7 @@
     <string name="institute_profile">Instituto</string>
     <string name="invalidURL">URL no valida</string>
     <string name="last_names_profile">Apellidos</string>
-    <string name="link_new_post">Enlace</string>
+    <string name="link_new_post">Archivo PDF</string>
     <string name="logo_de_la_app_image_login">Logo de la app</string>
     <string name="logo_de_la_app_recoovery_password">Logo de la app</string>
     <string name="menu_ajustes">Ajustes</string>
@@ -159,7 +162,7 @@
     <string name="strTitle">Titulo</string>
     <string name="tag_name">Nombre de etiqueta…</string>
     <string name="tags_admin_menu">Etiquetas</string>
-    <string name="tags_new_post">Etiquetas</string>
+    <string name="tags_new_post">Ciclos</string>
     <string name="telefonoInvalido">Número de teléfono no válido</string>
     <string name="telephone_number_profile">Teléfono</string>
     <string name="textBtnSave">Guardar cambios</string>
